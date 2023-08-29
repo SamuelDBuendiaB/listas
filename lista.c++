@@ -44,7 +44,7 @@ else {
 }
 nuevo_nodo->next = nodo1;
 
-cout<<"\ndato ingresado";
+cout<<"\ndato ingresado\n";
 }
 
 void show(lista *orden){
@@ -59,14 +59,78 @@ void show(lista *orden){
 
 }
 
+void busqueda(lista *orden,int num){
+    bool p= false;
+    int i = 0;
+   lista * bus = new lista();
+    bus=orden;
+
+
+    while((bus !=NULL)&&(bus->numero <=num)){
+
+        if (bus->numero == num)
+        {
+            p=true;
+        }
+         i++;
+         bus=bus->next;
+    }
+
+    if (p==true)
+    {
+        cout<<"el numero  "<<num<<"  Se encuentra en la lista en la posicion "<<i<<endl;
+    }
+    else{
+        cout<<"el numero   "<<num<<"   No se ha encontrado\n"<<endl;
+    }
+
+
+}
+
+void borrar(lista *&orden, int n){
+    if (orden != NULL)
+    {
+        lista * borr;
+        lista *prev = NULL;
+        borr = orden;
+    
+    while ((borr != NULL)&&(borr->numero != n))
+    {
+        prev = borr;
+        borr = borr -> next;
+    }
+    if (borr == NULL)
+    {
+        cout<<"Dato no encontrado"<<endl;
+
+    }
+    else if (prev == NULL)
+    {
+       orden = orden -> next;
+        delete borr;
+    }
+    
+    else{
+        prev ->next = borr ->next;
+        delete borr;
+    }
+    
+
+    }
+}
+
+
+
 void eleccion(){
     int opcion,numero;
 
     do
     {
         cout<<"\n 1. Agregar numeros:  "<<endl;
-        cout<<"2. Agregar ver lista"<<endl;
-        cout<<"3. salir"<<endl;
+        cout<<"2. Agregar ver lista "<<endl;
+        cout<<"3. Buscar numero "<<endl;
+        cout<<"4. Numero a borrar "<<endl;
+        cout<<"5. salir"<<endl;
         cin>>opcion;
 
         switch (opcion)
@@ -80,9 +144,18 @@ void eleccion(){
         case 2 : show(orden);
         cout<<"   "<<endl;
             break;
-    
+
+        case 3 :cout<<"\nDigitar numro a buscar ";
+        cin>>numero;
+         busqueda(orden,numero);
+         break;
+
+         case 4: cout<<"\nDigitar numero a borrar ";
+         cin>>numero;
+         borrar(orden,numero);
+         break;
         }
 
-    } while (opcion !=3);
+    } while (opcion !=5);
     
 }
